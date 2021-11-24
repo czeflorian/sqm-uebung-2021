@@ -10,10 +10,10 @@ node {
       sh 'printenv'
     }
     stage('Build Docker'){
-     sh 'docker build -t generic-react-app --no-cache .'
+     sh 'sudo docker build -t generic-react-app --no-cache .'
     }
     stage('Deploy'){
-        sh 'docker run -d -p 8081:80 generic-react-app'
+        sh 'sudo docker run -d -p 8081:80 generic-react-app'
     }
   }
   catch (err) {
