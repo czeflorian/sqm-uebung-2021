@@ -9,9 +9,6 @@ node {
       sh 'docker -v'
       sh 'printenv'
     }
-	stage('Check User and group'){
-		echo "$USER"
-	}
     stage('Build Docker'){
      sh 'docker build -t generic-react-app --no-cache .'
     }
