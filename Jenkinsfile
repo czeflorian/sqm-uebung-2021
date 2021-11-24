@@ -9,13 +9,11 @@ node {
       sh 'docker -v'
       sh 'printenv'
     }
-    stage('Build Docker test'){
+    stage('Build Docker'){
      sh 'docker build -t generic-react-app --no-cache .'
     }
     stage('Deploy'){
-      if(env.BRANCH_NAME == 'main'){
         sh 'docker run -d -p 8081:80 generic-react-app'
-      }
     }
   }
   catch (err) {
