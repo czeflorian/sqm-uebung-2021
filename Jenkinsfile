@@ -9,11 +9,14 @@ node {
       sh 'docker -v'
       sh 'printenv'
     }
+	stage('Whoami'){
+		echo "$(whoami)"
+	}
     stage('Build Docker'){
-     sh 'sudo docker build -t generic-react-app --no-cache .'
+     sh 'docker build -t generic-react-app --no-cache .'
     }
     stage('Deploy'){
-        sh 'sudo docker run -d -p 8081:80 generic-react-app'
+        sh 'docker run -d -p 8081:80 generic-react-app'
     }
   }
   catch (err) {
