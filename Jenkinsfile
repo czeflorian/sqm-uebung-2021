@@ -9,9 +9,6 @@ node {
       sh 'docker -v'
       sh 'printenv'
     }
-	stage('Whoami'){
-		sh "whoami"
-	}
     stage('Build Docker'){
      sh 'docker build -t generic-react-app --no-cache .'
     }

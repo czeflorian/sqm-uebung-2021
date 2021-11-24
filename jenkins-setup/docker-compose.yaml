@@ -1,39 +1,35 @@
 version: "3.9"
 
 services:
-  # jenkins-docker:
-  #   image: docker:dind
-  #   privileged: true
-  #   networks:
-  #     jenkins_network:
-  #       aliases:
-  #         - docker
-  #   environment:
-  #     DOCKER_TLS_CERTDIR: /certs
-  #   volumes:
-  #     - jenkins_data:/var/jenkins_home
-  #     - jenkins_certs:/certs/client
-  #   ports:
-  #     - "2376:2376"
+  jenkins-docker:
+    image: docker:dind
+    privileged: true
+    networks:
+      jenkins_network:
+        aliases:
+          - docker
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    volumes:
+      - ./mnt/jenkins_data:/var/jenkins_home
+      - ./mnt/jenkins_certs:/certs/client
+    ports:
+      - "2376:2376"
   jenkins:
     build:
       context: ./jenkins
     networks:
       - jenkins_network
-    # environment:
-    # needs "Expose daemon on tcp://localhost:2375 without TLS" in docker desktop --> run images on docker desktop locally
-    # DOCKER_HOST: tcp://docker:2375
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIF: 1
     ports:
-      - "50000:50000"
       - "8080:8080"
+      - "50000:50000"
     volumes:
-      - jenkins_data:/var/jenkins_home
-      - jenkins_certs:/certs/client
-      # makes it possible to start docker containers on host
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./mnt/jenkins_data:/var/jenkins_home
+      - ./mnt/jenkins_certs:/certs/client
 
-volumes:
-  jenkins_data: {}
-  jenkins_certs: {}
 networks:
   jenkins_network:
