@@ -16,9 +16,14 @@ pipeline {
 				sh 'npm run build'
 			}
 		}
-		stage('Deploy NGINX Container'){
+		stage('Build Docker Container'){
 			steps{
-				sh 'echo $(pwd).'
+				sh 'docker build . -t generic-react-app-nginx'
+			}
+		}
+		stage('Deploy Docker Container'){
+			steps{
+				sh 'docker run -d -p 8081:80 generic-react-app-nginx'
 			}
 		}
     }
