@@ -17,6 +17,10 @@ pipeline {
 			}
 		}
 		stage('Build Docker Container'){
+			 dockerfile {
+                dir '.'
+                label "prod"
+             }
 			steps{
 				sh 'docker build . -t generic-react-app-nginx'
 			}
