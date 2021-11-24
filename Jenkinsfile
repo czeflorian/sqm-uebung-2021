@@ -17,12 +17,9 @@ pipeline {
 			}
 		}
 		stage('Build Docker Container'){
-			 dockerfile {
-                dir '.'
-                label "prod"
-             }
+			agent{ dockerfile true }
 			steps{
-				sh 'docker build . -t generic-react-app-nginx'
+				sh 'echo Built.'
 			}
 		}
 		stage('Deploy Docker Container'){
