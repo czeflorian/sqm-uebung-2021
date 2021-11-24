@@ -18,7 +18,7 @@ pipeline {
 		}
 		stage('Deploy NGINX Container'){
 			steps{
-				sh 'echo Deployed.'
+				sh 'echo $(pwd).'
 			}
 		}
     }
